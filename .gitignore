@@ -1,0 +1,8 @@
+x64
+Debug
+Release
+.vs
+Hermex/x64
+Hermex/Hermex.vcxproj.user
+Hermex/Debug
+Hermex/Release
