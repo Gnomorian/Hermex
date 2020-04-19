@@ -18,3 +18,9 @@ CameraContainer::~CameraContainer()
 {
 
 }
+
+void CameraContainer::OnClose(wxCloseEvent& event)
+{
+	// tell the camera to stop so its timers and background processes dont crash
+	camLocal->OnClose(event);
+}

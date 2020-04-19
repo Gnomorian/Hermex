@@ -10,5 +10,7 @@ class CameraContainer : public wxControl
 public:
 	CameraContainer(wxWindow* parent, wxWindowID id = wxID_ANY);
 	~CameraContainer();
+
+	void OnClose(wxCloseEvent& event);
 };
 

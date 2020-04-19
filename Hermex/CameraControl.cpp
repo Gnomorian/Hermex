@@ -5,7 +5,6 @@
 wxBEGIN_EVENT_TABLE(CameraControl, wxControl)
 EVT_PAINT(CameraControl::OnPaint)
 EVT_TIMER(CameraControlTimerId, CameraControl::OnTimer)
-EVT_CLOSE(CameraControl::OnClose)
 wxEND_EVENT_TABLE()
 
 CameraControl::CameraControl(wxWindow* parent, wxWindowID id) : wxControl(parent, id), bitmap(nullptr)

@@ -1,6 +1,6 @@
 #include "CameraControlPresenter.h"
 
-CameraControlPresenter::CameraControlPresenter() : cameraProps({ 0 }), rgbImageArray(nullptr), cameraSize(800, 600)
+CameraControlPresenter::CameraControlPresenter() : cameraProps({ 0 }), rgbImageArray(nullptr), cameraSize(800, 600), isNextFrameRequired(false)
 {
 
 }
@@ -13,7 +13,7 @@ CameraControlPresenter::~CameraControlPresenter()
 
 void CameraControlPresenter::nextFrame(wxBitmap*& pBitmap, wxSize desiredSize)
 {
-	if (isCaptureDone(0))
+	if (isNextFrameRequired && isCaptureDone(0))
 	{
 		int rgbArrayPos = 0;
 		// convert from bgra to rgb array
@@ -46,6 +46,7 @@ void CameraControlPresenter::startCapture(wxWindow* window, int timerId)
 	//TODO: fail if camera is not avalable
 	if (timer.IsRunning())
 		return;
+	isNextFrameRequired = true;
 	setupESCAPI();
 	cameraProps.mHeight = cameraSize.y;
 	cameraProps.mWidth = cameraSize.x;
@@ -61,10 +62,12 @@ void CameraControlPresenter::startCapture(wxWindow* window, int timerId)
 
 void CameraControlPresenter::stopCapture()
 {
-	timer.Stop();
+	// stop the timer accessing memory that may not be there anymore
+	isNextFrameRequired = false;
 
-	while (!isCaptureDone(0)) { wxSleep(1); }
 	deinitCapture(0);
+
+	wxSleep(1);
 
 	delete[] cameraProps.mTargetBuf;
 	cameraProps.mTargetBuf = nullptr;

@@ -9,3 +9,8 @@ enum ControlIds
 {
 	ChatTextBoxId = 1
 };
+
+enum EventIds
+{
+	ApplicationCloseEvent = 5000
+};

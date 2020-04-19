@@ -8,6 +8,7 @@ class CameraControlPresenter
 	uint8_t* rgbImageArray;
 	wxSize cameraSize;
 	wxTimer timer;
+	bool isNextFrameRequired;
 public:
 	CameraControlPresenter();
 	~CameraControlPresenter();

@@ -1,6 +1,10 @@
 #include "MainForm.h"
 #include <wx/dcbuffer.h>
 
+wxBEGIN_EVENT_TABLE(MainForm, wxFrame)
+EVT_CLOSE(MainForm::OnClose)
+wxEND_EVENT_TABLE()
+
 MainForm::MainForm(MainFormPresenter* presenter) : wxFrame(nullptr, wxID_ANY, wxEmptyString)
 {
 	myPresenter = presenter;
@@ -18,9 +22,18 @@ MainForm::MainForm(MainFormPresenter* presenter) : wxFrame(nullptr, wxID_ANY, wx
 	grpChatContainer = new ChatContainer(splitChatVideo);
 
 	splitChatVideo->SplitHorizontally(grpCameraContainer, grpChatContainer);
+
+	menu = new MainFormMenu;
+	this->SetMenuBar(menu);
 }
 
 MainForm::~MainForm()
 {
 	delete myPresenter;
+}
+
+void MainForm::OnClose(wxCloseEvent& event)
+{
+	grpCameraContainer->OnClose(event);
+	Destroy();
 }
